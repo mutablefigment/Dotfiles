@@ -1,0 +1,27 @@
+#!/bin/bash
+# filename: setup
+
+set -ex
+
+move_config() {
+    mkdir -p ~/.config/$1
+    cp -vr $1/* ~/.config/$1/
+    
+    # FIXME: use symlinks instead of the copy above!
+    # ln -s $1 ~/.config/$1
+}
+
+# copy over the config files and thats it
+readarray -t config_dirs < <(find . -maxdepth 1 -type d -printf '%P\n')
+for dir in "${config_dirs[@]}" ;
+do
+    if [[ -n "${dir// /}" ]] ; then
+        move_config $dir
+    else
+        echo "empty"
+    fi
+done
+
+# replace apt update with custom script
+# see https://unix.stackexchange.com/questions/70686/how-to-run-a-command-after-apt-get-upgrade
+# for more info, the alternative is to use apt.conf hook

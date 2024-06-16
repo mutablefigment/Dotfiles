@@ -1,0 +1,12 @@
+#!/bin/bash
+# filename: apt-get
+# source: https://unix.stackexchange.com/questions/70686/how-to-run-a-command-after-apt-get-upgrade
+
+# '$@' is all of the arguments passed to the script
+/usr/bin/apt-get-bin "$@"
+
+if [[ $1 == *update* ]] ; then
+    git pull
+elif [[ $1 == *upgrade* ]] ; then
+    git pull
+fi
